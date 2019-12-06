@@ -2,54 +2,57 @@ import { observable, action, computed } from 'mobx'
 import axios from 'axios'
 
 class Transactions {
-	@observable transactions = []
-    @observable month
-    @observable category
-	@computed get numOfTransactions() {
-		return this.transactions.length
-	}
+	@observable _transactions = []
+	@observable _month = null
+	@observable _category = null
 
+	@computed get transactions() {
+        if (this._month !== null) {
+            return this.monthlyBreakdown
+        } else if (this._category !== null) {
+            return this.catagoryBreakdown
+        } else {
+            return this._transactions
+        }
+	}
+    
+    @computed get numOfTransactions() {
+		return this._transactions.length
+	}
 	@computed get currentBalance() {
-		return this.transactions.length === 0
+		return this._transactions.length === 0
 			? 0
-			: this.transactions
+			: this._transactions
 					.map(t => t.amount)
 					.reduce((prev, current) => prev + current)
 	}
 
 	@computed get categories() {
-		return [...new Set(this.transactions.map(t => t.category))]
+		return [...new Set(this._transactions.map(t => t.category))]
 	}
 
 	@action monthSelector = month => {
-		this.month = month
-    }
+		this._month = month
+	}
 
-    @action categorySelector = category => {
-        category = category === '' ? 'all' : category
-		this.category = category
+	@action categorySelector = category => {
+		category = category === '' ? 'all' : category
+		this._category = category
     }
     
-    @computed get selectedMonth() {
-        return this.month
-    }
-
-    @computed get allTransactions() {
-        return this.transactions
-    } 
-
 	@computed get monthlyBreakdown() {
-        return this.transactions.length === 0 || !this.month
-			? null
-			: this.transactions.filter(
-					t => new Date(t.date).getMonth() === parseInt(this.month)
+		return this._transactions.length === 0 || !this._month
+			? []
+			: this._transactions.filter(
+					t => new Date(t.date).getMonth() === parseInt(this._month)
 			  )
-    }
-    
-    @action catagoryBreakdown = category => {
-        return this.transactions.filter(
-            t => t.category === category
-        )} 
+	}
+
+	@computed get catagoryBreakdown() {
+		return this._transactions.length === 0 || !this._category
+			? []
+			: this._transactions.filter(t => t.category === this._category)
+	}
 
 	@action async getTransactions() {
 		let transactions
@@ -58,7 +61,7 @@ class Transactions {
 		} catch (err) {
 			return err
 		}
-		this.transactions = transactions.data
+		this._transactions = transactions.data
 	}
 
 	@action async pushTransaction(transaction) {

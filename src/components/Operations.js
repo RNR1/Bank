@@ -7,7 +7,8 @@ import {
 	Toolbar,
 	IconButton,
 	Typography,
-	FormControl
+    FormControl,
+    ListItem
 } from "@material-ui/core"
 import CustomizedSnackbars from "./Snackbar"
 import CloseIcon from "@material-ui/icons/Close"
@@ -90,10 +91,10 @@ class Operations extends Component {
 
 	render() {
 		return (
-			<Container fixed style={{ height: "50vh", width: "40vw" }}>
-				<Grid container justify='flex-start'>
-					<Toolbar>
-						<IconButton
+			<Container fixed style={{ display: "grid", height: "45vh" }}>
+				<Grid item>
+					<Toolbar style={{justifySelf: "start", alignSelf: "center"}}>
+                        <IconButton
 							edge='start'
 							color='inherit'
 							onClick={this.closeDialog}

@@ -41,7 +41,7 @@ class App extends Component {
 
 	closeDialog = () => this.setState({ openDialog: false })
 
-	componentDidMount() {
+	componentDidMount = () => {
 		this.props.transactions.getTransactions()
 	}
 
@@ -49,7 +49,6 @@ class App extends Component {
 
 		return (
 			<Router>
-				
 				<div className='background'></div>
 				<div className='App'>
 					<Grid container justify='center'>
@@ -58,33 +57,35 @@ class App extends Component {
 					</Grid>
 
 					<Route exact path='/transactions' component={Transactions} />					
+					
 					<Route
 						exact
 						path='/breakdown/category/:category'
-						render={({ match }) =>
-							match.params.category === 'all' ? (
+						render={({match}) =>
+						{
+							return match.params.category === 'all' ? (
 								<Redirect to='/transactions' />
 							) : (
 								<Transactions/>
 							)
-						}
+						}}
 					/>
-					{this.props.transactions.category !== null ? (
-					<Redirect to={`/breakdown/Category/${this.props.transactions.category}`} />
+					{this.props.transactions._category !== null ? (
+					<Redirect to={`/breakdown/Category/${this.props.transactions._category}`} />
 				) : null}
 					<Route
 						exact
 						path='/breakdown/:month'
 						render={({ match }) =>
-							parseInt(match.params.month) ===
+							parseInt(match.params._month) ===
 							new Date().getMonth() ? (
 								<Redirect to='/transactions' />
 							) : ( <Transactions/>)}
 					/>
 				</div>
 				
-					{this.props.transactions.month !== null ? (
-					<Redirect to={`/breakdown/${this.props.transactions.month}`} />
+					{this.props.transactions._month !== null ? (
+					<Redirect to={`/breakdown/${this.props.transactions._month}`} />
 				) : null}
 				<Dialog
 					open={this.state.openDialog}

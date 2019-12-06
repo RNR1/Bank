@@ -17,31 +17,29 @@ class TransactionsTable extends Component {
 	constructor() {
 		super()
 		this.state = {
-			transactionsByMonth: null,
-			month: null
+			transactions: null
 		}
 	}
+	
+	
 
-	getMonthlyBreakdown = () => {
-		console.log(this.props.transactions.monthlyBreakdown)		
-	}
-
-	viewTotalTransactions = () => {
-		if (!this.props.transactions.transactions) { return }
-		let transactions = this.props.transactions.allTransactions
-
+	getTransactions = () => {
 		return (
 			<TableBody>
-				{transactions.map(t => (
+				{this.props.transactions.transactions.map(t => (
 					<Transaction key={t._id} transaction={t} />
 				))}
 			</TableBody>
 		)
 	}
 
-	viewTransactionsByMonth = () => {
-		if (!this.props.transactions.monyhlyBreakdown) { return }
-		let transactions = this.props.transactions.monthlyBreakdown
+	
+
+	viewTransactionsByCategory = () => {
+		if (!this.props.transactions.categoryBreakdown) {
+			return
+		}
+		let transactions = this.getCategoryBreakdown()
 		return (
 			<TableBody>
 				{transactions.map(t => (
@@ -52,6 +50,7 @@ class TransactionsTable extends Component {
 	}
 
 	render() {
+		const transactions = this.props.transactions.transactions
 		return (
 			<Grid item xs>
 				<Paper
@@ -67,9 +66,11 @@ class TransactionsTable extends Component {
 								))}
 							</TableRow>
 						</TableHead>
-						{this.props.transactions.monthlyBreakdown !== null
-							? this.getMonthlyBreakdown
-							: null}
+						<TableBody>
+							{transactions.map(t => (
+								<Transaction key={t._id} transaction={t} />
+				))}
+			</TableBody>
 					</Table>
 				</Paper>
 			</Grid>
