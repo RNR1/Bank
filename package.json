@@ -1,5 +1,5 @@
 {
-  "name": "react-mobx-setup",
+  "name": "bank",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -21,6 +21,7 @@
     "camelcase": "^5.2.0",
     "case-sensitive-paths-webpack-plugin": "2.2.0",
     "css-loader": "2.1.1",
+    "date-fns": "^2.0.0-beta.5",
     "dotenv": "6.2.0",
     "dotenv-expand": "5.1.0",
     "eslint": "^6.1.0",
