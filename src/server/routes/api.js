@@ -5,7 +5,7 @@ const router = express.Router()
 router.get('/transactions', async (req, res) => {
     let transactions
     try {
-        transactions = await Transaction.find({}).sort({date: 1})
+        transactions = await Transaction.find({}).sort({date: -1})
     } catch(err) { res.status(400).send(err) }
     res.status(200).send(transactions)
 })

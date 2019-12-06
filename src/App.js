@@ -8,7 +8,7 @@ import CustomizedSnackbars from './components/Snackbar'
 import { Dialog, Grid } from '@material-ui/core'
 import './style/App.css'
 
-@inject('transactions', 'general')
+@inject('transactions')
 @observer
 class App extends Component {
 	constructor() {
@@ -46,7 +46,6 @@ class App extends Component {
 	}
 
 	render() {
-
 		return (
 			<Router>
 				<div className='background'></div>
@@ -56,35 +55,32 @@ class App extends Component {
 						<Links openDialog={this.openDialog} />
 					</Grid>
 
-					<Route exact path='/transactions' component={Transactions} />					
-					
+					<Route exact path='/transactions' component={Transactions} />
+
 					<Route
 						exact
 						path='/breakdown/category/:category'
-						render={({match}) =>
-						{
+						render={({ match }) => {
 							return match.params.category === 'all' ? (
 								<Redirect to='/transactions' />
 							) : (
-								<Transactions/>
+								<Transactions />
 							)
 						}}
 					/>
 					{this.props.transactions._category !== null ? (
-					<Redirect to={`/breakdown/Category/${this.props.transactions._category}`} />
-				) : null}
+						<Redirect
+							to={`/breakdown/Category/${this.props.transactions._category}`}
+						/>
+					) : null}
 					<Route
 						exact
 						path='/breakdown/:month'
-						render={({ match }) =>
-							parseInt(match.params._month) ===
-							new Date().getMonth() ? (
-								<Redirect to='/transactions' />
-							) : ( <Transactions/>)}
+						render={({ match }) => <Transactions />}
 					/>
 				</div>
-				
-					{this.props.transactions._month !== null ? (
+
+				{this.props.transactions._month !== null ? (
 					<Redirect to={`/breakdown/${this.props.transactions._month}`} />
 				) : null}
 				<Dialog
@@ -108,7 +104,6 @@ class App extends Component {
 						onClose={this.hidePopUp}
 					/>
 				) : null}
-				
 			</Router>
 		)
 	}

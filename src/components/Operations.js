@@ -7,8 +7,7 @@ import {
 	Toolbar,
 	IconButton,
 	Typography,
-    FormControl,
-    ListItem
+    FormControl
 } from "@material-ui/core"
 import CustomizedSnackbars from "./Snackbar"
 import CloseIcon from "@material-ui/icons/Close"

@@ -9,10 +9,10 @@ export default function Links(props) {
 		justify="center"
 		>
 			<Grid item>
-			<Button><Link to='/transactions'>Transactions</Link></Button>
+			<Button color="primary" ><Link to='/transactions'>Transactions</Link></Button>
 			</Grid>
 			<Grid item>
-			<Button onClick={props.openDialog}>Operations</Button>
+			<Button color="primary" onClick={props.openDialog}>Operations</Button>
 			</Grid>
 		</Grid>
 	)

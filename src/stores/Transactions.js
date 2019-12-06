@@ -7,16 +7,18 @@ class Transactions {
 	@observable _category = null
 
 	@computed get transactions() {
-        if (this._month !== null) {
-            return this.monthlyBreakdown
-        } else if (this._category !== null) {
-            return this.catagoryBreakdown
-        } else {
-            return this._transactions
-        }
+        if (this._month && this._category) {
+            return this.combinedBreakdown
+        } else if (this._month !== null) {
+			return this.monthlyBreakdown
+		} else if (this._category !== null) {
+			return this.catagoryBreakdown
+		} else {
+			return this._transactions
+		}
 	}
-    
-    @computed get numOfTransactions() {
+
+	@computed get numOfTransactions() {
 		return this._transactions.length
 	}
 	@computed get currentBalance() {
@@ -36,10 +38,10 @@ class Transactions {
 	}
 
 	@action categorySelector = category => {
-		category = category === '' ? 'all' : category
+		category = category === '' ? null : category
 		this._category = category
-    }
-    
+	}
+
 	@computed get monthlyBreakdown() {
 		return this._transactions.length === 0 || !this._month
 			? []
@@ -52,7 +54,13 @@ class Transactions {
 		return this._transactions.length === 0 || !this._category
 			? []
 			: this._transactions.filter(t => t.category === this._category)
-	}
+    }
+    
+    @computed get combinedBreakdown() {
+        return this._transactions.length === 0 || (!this._category && !this._month)
+        ? []
+        : this._transactions.filter(t => t.category === this._category && new Date(t.date).getMonth() === parseInt(this._month))
+    }
 
 	@action async getTransactions() {
 		let transactions
