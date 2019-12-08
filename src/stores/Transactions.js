@@ -65,7 +65,7 @@ class Transactions {
 	@action async getTransactions() {
 		let transactions
 		try {
-			transactions = await axios.get('/transactions')
+			transactions = await axios.get('api/transactions')
 		} catch (err) {
 			return err
 		}
@@ -74,7 +74,7 @@ class Transactions {
 
 	@action async pushTransaction(transaction) {
 		try {
-			await axios.post('/transaction', transaction)
+			await axios.post('api/transaction', transaction)
 		} catch (err) {
 			console.log(err)
 		}
@@ -83,7 +83,7 @@ class Transactions {
 
 	@action async deleteTransaction(transactionId) {
 		try {
-			await axios.delete('/transaction', {
+			await axios.delete('api/transaction', {
 				data: { transactionId }
 			})
 		} catch (err) {
