@@ -28,8 +28,9 @@ class Operations extends Component {
 
 	handleInput = (event) => {
         const target = event.target
-		const value = target.value
-        const name = target.name
+		let value = target.value
+		const name = target.name
+		if (name === "amount") { value = Number(value) }
         this.props.general.handleInput(name, value)
     }
 
@@ -54,7 +55,7 @@ class Operations extends Component {
 
 	withdraw = () => {
 		let transaction = {
-			amount: parseInt(-this.props.general.amount),
+			amount: -Math.abs(this.props.general.amount),
 			vendor: this.props.general.vendor,
 			category: this.props.general.category,
 			date: Date.now()
@@ -72,7 +73,7 @@ class Operations extends Component {
 
 	deposit = () => {
 		let transaction = {
-			amount: parseInt(this.props.general.amount),
+			amount: Math.abs(this.props.general.amount),
 			vendor: this.props.general.vendor,
 			category: this.props.general.category,
 			date: Date.now()
