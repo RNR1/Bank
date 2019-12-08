@@ -65,7 +65,7 @@ class Transactions {
 	@action async getTransactions() {
 		let transactions
 		try {
-			transactions = await axios.get('http://localhost:8020/transactions')
+			transactions = await axios.get('/transactions')
 		} catch (err) {
 			return err
 		}
@@ -74,7 +74,7 @@ class Transactions {
 
 	@action async pushTransaction(transaction) {
 		try {
-			await axios.post('http://localhost:8020/transaction', transaction)
+			await axios.post('/transaction', transaction)
 		} catch (err) {
 			console.log(err)
 		}
@@ -83,7 +83,7 @@ class Transactions {
 
 	@action async deleteTransaction(transactionId) {
 		try {
-			await axios.delete('http://localhost:8020/transaction', {
+			await axios.delete('/transaction', {
 				data: { transactionId }
 			})
 		} catch (err) {
