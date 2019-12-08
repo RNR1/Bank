@@ -5,7 +5,7 @@ const api = require('./routes/api')
 const path = require('path')
 const app = express()
 
-mongoose.connect(process.env.MONGO_DB || "mongodb://localhost/Transactions", {
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/Transactions", {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 	useFindAndModify: false
