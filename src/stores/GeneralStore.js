@@ -2,7 +2,7 @@ import {observable, action } from 'mobx'
 
 class GeneralStore {
     
-    @observable amount = 0
+    @observable amount
     @observable vendor = ""
     @observable category = ""
     
