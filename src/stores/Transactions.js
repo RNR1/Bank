@@ -1,6 +1,6 @@
 import { observable, action, computed } from 'mobx'
 import axios from 'axios'
-
+const API_URL = ''
 class Transactions {
 	@observable _transactions = []
 	@observable _month = null
@@ -51,7 +51,7 @@ class Transactions {
 	}
 
 	@computed get catagoryBreakdown() {
-		return this._transactions.length === 0 || !this._category
+		return !this._transactions.length || !this._category
 			? []
 			: this._transactions.filter(t => t.category === this._category)
     }
@@ -65,7 +65,7 @@ class Transactions {
 	@action async getTransactions() {
 		let transactions
 		try {
-			transactions = await axios.get('api/transactions')
+			transactions = await axios.get(`${API_URL}/api/transactions`)
 		} catch (err) {
 			return err
 		}
@@ -74,7 +74,7 @@ class Transactions {
 
 	@action async pushTransaction(transaction) {
 		try {
-			await axios.post('api/transaction', transaction)
+			await axios.post(`${API_URL}/api/transaction`, transaction)
 		} catch (err) {
 			console.log(err)
 		}
@@ -83,7 +83,7 @@ class Transactions {
 
 	@action async deleteTransaction(transactionId) {
 		try {
-			await axios.delete('api/transaction', {
+			await axios.delete(`${API_URL}/api/transaction`, {
 				data: { transactionId }
 			})
 		} catch (err) {
