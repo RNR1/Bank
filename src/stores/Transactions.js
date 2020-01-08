@@ -1,15 +1,16 @@
 import { observable, action, computed } from 'mobx'
 import axios from 'axios'
-const API_URL = ''
+const API_URL = 'http://www.localhost:8020'
+
 class Transactions {
 	@observable _transactions = []
 	@observable _month = null
 	@observable _category = null
 
 	@computed get transactions() {
-        if (this._month && this._category) {
-            return this.combinedBreakdown
-        } else if (this._month !== null) {
+		if (this._month && this._category) {
+			return this.combinedBreakdown
+		} else if (this._month !== null) {
 			return this.monthlyBreakdown
 		} else if (this._category !== null) {
 			return this.catagoryBreakdown
@@ -43,7 +44,7 @@ class Transactions {
 	}
 
 	@computed get monthlyBreakdown() {
-		return this._transactions.length === 0 || !this._month
+		return !this.numOfTransactions || !this._month
 			? []
 			: this._transactions.filter(
 					t => new Date(t.date).getMonth() === parseInt(this._month)
@@ -51,16 +52,20 @@ class Transactions {
 	}
 
 	@computed get catagoryBreakdown() {
-		return !this._transactions.length || !this._category
+		return !this.numOfTransactions || !this._category
 			? []
 			: this._transactions.filter(t => t.category === this._category)
-    }
-    
-    @computed get combinedBreakdown() {
-        return this._transactions.length === 0 || (!this._category && !this._month)
-        ? []
-        : this._transactions.filter(t => t.category === this._category && new Date(t.date).getMonth() === parseInt(this._month))
-    }
+	}
+
+	@computed get combinedBreakdown() {
+		return !this.numOfTransactions || (!this._category && !this._month)
+			? []
+			: this._transactions.filter(
+					t =>
+						t.category === this._category &&
+						new Date(t.date).getMonth() === parseInt(this._month)
+			  )
+	}
 
 	@action async getTransactions() {
 		let transactions
@@ -74,11 +79,15 @@ class Transactions {
 
 	@action async pushTransaction(transaction) {
 		try {
-			await axios.post(`${API_URL}/api/transaction`, transaction)
+			let postTransaction = await axios.post(
+				`${API_URL}/api/transaction`,
+				transaction
+			)
+			this.getTransactions()
+			return postTransaction.data
 		} catch (err) {
-			console.log(err)
+			throw new Error(err.message)
 		}
-		this.getTransactions()
 	}
 
 	@action async deleteTransaction(transactionId) {

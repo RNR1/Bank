@@ -4,10 +4,11 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {Provider} from 'mobx-react'
-import {general} from './stores/GeneralStore'
+import {operations} from './stores/Operations'
 import {transactions} from './stores/Transactions'
+import {popup} from './stores/Popup'
 
-const stores = {general, transactions}
+const stores = {operations, transactions, popup}
 
 ReactDOM.render(<Provider {...stores}><App /></Provider>, document.getElementById('root'));
 
