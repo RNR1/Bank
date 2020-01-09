@@ -8,12 +8,10 @@ class Transactions {
 	@observable _category = null
 
 	@computed get transactions() {
-		if (this._month && this._category) {
-			return this.combinedBreakdown
-		} else if (this._month !== null) {
+		if (this._month !== null) {
 			return this.monthlyBreakdown
 		} else if (this._category !== null) {
-			return this.catagoryBreakdown
+			return this.categoryBreakdown
 		} else {
 			return this._transactions
 		}
@@ -36,6 +34,7 @@ class Transactions {
 
 	@action monthSelector = month => {
 		this._month = month
+
 	}
 
 	@action categorySelector = category => {
@@ -44,14 +43,14 @@ class Transactions {
 	}
 
 	@computed get monthlyBreakdown() {
-		return !this.numOfTransactions || !this._month
+		return !this.numOfTransactions || !this._month === null
 			? []
 			: this._transactions.filter(
 					t => new Date(t.date).getMonth() === parseInt(this._month)
 			  )
 	}
 
-	@computed get catagoryBreakdown() {
+	@computed get categoryBreakdown() {
 		return !this.numOfTransactions || !this._category
 			? []
 			: this._transactions.filter(t => t.category === this._category)

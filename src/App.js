@@ -15,6 +15,7 @@ class App extends Component {
 
 	popupHandler = () => {
 		let popup = this.props.popup
+		if (!popup.show) {return}
 		return (
 			<Popup
 				key={Date.now}
@@ -31,7 +32,7 @@ class App extends Component {
 			<Router>
 				<div className='background'></div>
 				<div className='App'>
-					<Header openDialog={this.openDialog} />
+					<Header />
 					<Routes />
 					{this.popupHandler()}
 				</div>

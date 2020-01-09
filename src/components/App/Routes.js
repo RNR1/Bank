@@ -16,66 +16,62 @@ class Routes extends Component {
 	}
 
 	RedirectHome() {
-  return <Redirect to='/transactions' />
-  }
+		return <Redirect to='/transactions' />
+	}
 
 	Transactions() {
-    return <Route exact path='/transactions' component={Transactions} />
-  }
+		return <Route exact path='/transactions' component={Transactions} />
+	}
 
-  Operations = () => {
-	return <Route exact path='/operations' render={({history}) => <OperationsDialog history={history} />} pr />
+	Operations = () => {
+		return (
+			<Route
+				exact
+				path='/operations'
+				render={({ history }) => <OperationsDialog history={history} />}
+				pr
+			/>
+		)
 	}
 	CategoryBreakdown() {
 		return (
 			<Route
 				exact
 				path='/breakdown/category/:category'
-				render={({ match }) => {
-					return match.params.category === 'all' ? (
-						this.RedirectHome()
-					) : (
-						<Transactions />
-					)
-				}}
+				component={Transactions}
 			/>
 		)
 	}
 
 	MonthBreakdown() {
-		return (
-			<Route
-				exact
-				path='/breakdown/:month'
-				render={({ match }) => <Transactions />}
-			/>
-		)
-  }
+		return <Route exact path='/breakdown/:month' component={Transactions} />
+	}
 
-  RedirectToMonth() {
-    return this.props.transactions._month !== null ? (
-      <Redirect to={`/breakdown/${this.props.transactions._month}`} />
-    ) : null
-  }
+	// RedirectToMonth() {
+	// 	return this.props.transactions._month !== null ? (
+	// 		<Redirect to={`/breakdown/${this.props.transactions._month}`} />
+	// 	) : null
+	// // }
 
-  RedirectToCategory() {
-    return this.props.transactions._category !== null ? (
-      <Redirect
-        to={`/breakdown/category/${this.props.transactions._category}`}
-      />
-    ) : null
-  }
+	// RedirectToCategory() {
+	// 	let category = this.props.transactions._category
+	// 	return category !== null ? (
+	// 		<Redirect
+	// 			to={`/breakdown/category/${this.props.transactions._category}`}
+	// 		/>
+	// 	) : null
+	// }
 
 	render() {
 		return (
 			<main>
 				{this.Home()}
 				{this.Transactions()}
-        {this.Operations()}
+				{this.Operations()}
 				{this.CategoryBreakdown()}
 				{this.MonthBreakdown()}
-        {this.RedirectToMonth()}
-        {this.RedirectToCategory()}
+				{/* {this.RedirectToMonth()} */}
+				{/* {this.RedirectToCategory()} */}
 			</main>
 		)
 	}
