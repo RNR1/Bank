@@ -1,6 +1,6 @@
 import { observable, action, computed } from 'mobx'
 import axios from 'axios'
-const API_URL = 'http://www.localhost:8020'
+const API_URL = ''
 
 class Transactions {
 	@observable _transactions = []
