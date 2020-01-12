@@ -37,7 +37,7 @@ An overview of all your transactions. You can select another month/category with
 <p align="center"><img src="assets/category-select.png" width="300" /></p>
 
 ### Operations
-Fill out the inputs and then click *Deposit* or *Withdraw* to add a new transactions.
+Fill out the inputs and then click *Deposit* or *Withdraw* to add a new transaction.
 <p align="center"><img src="assets/operations.png" width="300" /></p>
 
 ## Tech-stack
